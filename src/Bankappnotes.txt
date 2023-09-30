@@ -1,0 +1,53 @@
+            BANK-APP  
+     -----------------------       
+
+     1. crete a new project =. ng new bankapp-frontend
+     2. cd bankapp-frontend
+     3. code .
+     4. run the projet => ng serve --open
+     5. clear the code in app.component.html
+     6. Install third party libraries
+            1)     bootstrap => copy and paste bootstrap link index.html
+            2)     fontawesome => copy and paste link in index.html
+            3)     google fonts=> copy and paste in style.css
+     7. Create components
+             -> Register => ng g c register
+             -> Login    => ng g c login
+             -> Dashboard => ng g c dashboard
+             -> Transactions => ng g c transactions
+             -> PageNotFound => ng g c pageNotFound
+    8. Set Path for every pages   
+            set path for each pages in app.routing.modules.ts   
+    9. use <route-outlet> in app.component.html   (to view the pages)     
+   10. Page Design
+
+   11 Reactive Forms:_
+        Reactive forms provide a model-driven approach to handling form inputs whose values change over time.
+        Reactive forms are built around observable streams, where form inputs and values are provided as streams
+        of input values, which can be accessed synchronously.
+        => go to app.module.ts
+                       import { ReactiveFormsModule } from '@angular/forms';
+
+                        @NgModule({
+                        imports: [
+                        // other imports ...
+                        ReactiveFormsModule
+                                 ],
+                             })
+                         export class AppModule { }
+        things under things 
+         ->     FormGroup create in ts
+         ->     FormArray  create in ts
+         ->     FormControl      create in html page    
+
+             FormBuilder:-
+                 The FormBuilder provides syntactic sugar that shortens creating instances of a FormControl, 
+                 FormGroup, or FormArray.
+                 It reduces the amount of boilerplate needed to build complex forms.  
+             FormGroup:-
+                 Constructs a new FormGroup instance. Accepts a single generic argument,
+                  which is an object containing all the keys and corresponding inner control types.  
+
+                *ngIf=condition check          
+              
+       

@@ -1,0 +1,137 @@
+<!------navbar-->
+
+    <nav class="navbar bg-info">
+        <div class="container-fluid">
+          <a class="navbar-brand text-white" href="#">
+            <img class="ms-3" style="width: 70px; height: 60px;border-radius: 50%;" src="https://www.bing.com/th/id/OGC.d3cdc027d6858637cb129a83ea892acf?pid=1.7&rurl=https%3a%2f%2fcdn.dribbble.com%2fusers%2f1864713%2fscreenshots%2f10569127%2fmedia%2f5c55967e67316a13184d970c26e4a5c7.gif&ehk=Z3obe5OMcKMGNGTdV%2f4xYfcv8PoRtO%2ferV%2fA65uXvSg%3d" alt="">
+            ICICY Bank
+          </a>
+        </div>
+      </nav>
+
+
+      <!------login form-->
+      <div >
+        <div class="row ">
+          <div class="col-6 ">
+            <!----image-->
+            <img src="https://www.protechs.pro/images/isometric/on-off-iso-2.png" alt="">
+          </div>
+          <div class="col-6">
+            <!-----login form-->
+            <form (ngSubmit)="login()" [formGroup]="loginForm" class="shadow">
+              <h3 class="text-center my-2">Login</h3>
+              <!-- Account number -->
+              <div class="form-outline mt-4 mb-4">
+                <div *ngIf="this.loginForm.get('acno')?.errors&&this.loginForm.get('acno')?.touched" class="text-danger">*Invalid Account Number</div>
+               <input name="acno" formControlName="acno" type="text" id="form1Example1" class="form-control" />
+                <label class="form-label" for="form1Example1">Account Number</label>
+              </div>
+            
+              <!-- Password input -->
+              <div class="form-outline mb-4">
+                <div *ngIf="this.loginForm.get('password')?.errors&&this.loginForm.get('password')?.touched" class="text-danger">*Invalid Password</div>
+                <input name="password" formControlName="password" type="password" id="form1Example2" class="form-control" />
+                <label class="form-label" for="form1Example2">Password</label>
+              </div>
+            
+              <!-- 2 column grid layout for inline styling -->
+              <div class="row mb-4">
+                <div class="col d-flex justify-content-center">
+                  <!-- Checkbox -->
+                  <div class="form-check text-center">
+                    <input class="form-check-input" type="checkbox" value="" id="form1Example3" checked />
+                    <label class="form-check-label" for="form1Example3"> Remember me </label>
+                  </div>
+                </div>
+          
+              </div>
+            
+              <!-- Submit button -->
+              
+              <div class="text-center"> 
+                <h6 class="text-danger">{{loginError}}</h6>
+                <button type="submit" class="btn btn-primary btn-block">Login 
+                  <div *ngIf="loginSuccess" class="spinner-border text-light" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </button>
+                <p>don't have an account?<a routerLink="/register">Please register</a></p>
+                </div>            </form>
+          </div>
+        </div>
+   
+
+
+
+      <!-----footer-->
+      <footer class="bg-info text-center text-white">
+        <!-- Grid container -->
+        <div class="container p-4 pb-0">
+          <!-- Section: Social media -->
+          <section class="mb-4">
+            <!-- Facebook -->
+            <a
+              class="btn text-white btn-floating m-1"
+              style="background-color: #3b5998;"
+              href="#!"
+              role="button"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+      
+            <!-- Twitter -->
+            <a
+              class="btn text-white btn-floating m-1"
+              style="background-color: #55acee;"
+              href="#!"
+              role="button"
+              ><i class="fab fa-twitter"></i
+            ></a>
+      
+            <!-- Google -->
+            <a
+              class="btn text-white btn-floating m-1"
+              style="background-color: #dd4b39;"
+              href="#!"
+              role="button"
+              ><i class="fab fa-google"></i
+            ></a>
+      
+            <!-- Instagram -->
+            <a
+              class="btn text-white btn-floating m-1"
+              style="background-color: #ac2bac;"
+              href="#!"
+              role="button"
+              ><i class="fab fa-instagram"></i
+            ></a>
+      
+            <!-- Linkedin -->
+            <a
+              class="btn text-white btn-floating m-1"
+              style="background-color: #0082ca;"
+              href="#!"
+              role="button"
+              ><i class="fab fa-linkedin-in"></i
+            ></a>
+            <!-- Github -->
+            <a
+              class="btn text-white btn-floating m-1"
+              style="background-color: #333333;"
+              href="#!"
+              role="button"
+              ><i class="fab fa-github"></i
+            ></a>
+          </section>
+          <!-- Section: Social media -->
+        </div>
+        <!-- Grid container -->
+      
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+          © 2023 Copyright:
+          <a class="text-white" href="https://mdbootstrap.com/">@ICICYBank.com</a>
+        </div>
+        <!-- Copyright -->
+      </footer>
+

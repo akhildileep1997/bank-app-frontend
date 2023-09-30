@@ -1,0 +1,223 @@
+
+  <app-delete-acno [deleteAcno]="acno" (onCancel)="cancelDeleteConfirm()" (onDelete)="deleteFromParent()"></app-delete-acno>
+
+  <!----delete account succesfull-->
+  <div *ngIf="deleteSucessMessage">
+    <h1 class="text-center text-success m-5">{{deleteSucessMessage}}</h1>
+  </div>
+
+<div *ngIf="!deleteConfirmStatus">
+
+  <!------header-->
+<nav class="navbar navbar-expand-lg bg-info">
+  <div class="container-fluid">
+      <a class="navbar-brand text-white" href="#">        
+          <img class="ms-3" style="width: 70px; height: 60px;border-radius: 50%;" src="https://www.bing.com/th/id/OGC.d3cdc027d6858637cb129a83ea892acf?pid=1.7&rurl=https%3a%2f%2fcdn.dribbble.com%2fusers%2f1864713%2fscreenshots%2f10569127%2fmedia%2f5c55967e67316a13184d970c26e4a5c7.gif&ehk=Z3obe5OMcKMGNGTdV%2f4xYfcv8PoRtO%2ferV%2fA65uXvSg%3d" alt="">
+          ICICY Bank
+        </a>  
+       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav ms-auto ">
+       
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Services
+          </a>
+          <ul class="dropdown-menu">
+            <li><a (click)="getBalance()" data-bs-toggle="offcanvas" href="#offcanvasExample" class="dropdown-item" ><i class="fa-solid fa-money-bill me-2"></i> Balance Enquiry</a></li>
+            <li><a data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="dropdown-item" ><i class="fa-solid fa-money-bill-transfer me-2"></i> Fund Transfer</a></li>
+            <li><a routerLink="/transactions" class="dropdown-item" ><i class="fa-solid fa-clock-rotate-left me-2"></i> Transaction History</a></li>
+            <li><a (click)="deleteAccount()" class="dropdown-item" ><i class="fa-solid fa-trash me-2"></i> Remove Account</a></li>
+            <li><a (click)="logout()" class="dropdown-item" ><i class="fa-solid fa-right-from-bracket me-2"></i> Log out </a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+ </div>
+</nav>
+
+<div style="min-width: 70vh;" class="container text-center mt-5 p-5" *ngIf="logOutSuccess">
+<h1 class="text-danger">Your are being logged out.... please wait</h1>
+<div class="spinner-border text-warning" style="width: 3rem; height: 3rem;" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div>
+</div>
+
+
+<!--off-canvas for balance info-->
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+<div class="offcanvas-header">
+  <h5 class="offcanvas-title" id="offcanvasExampleLabel">Balance Info</h5>
+  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+</div>
+<div class="offcanvas-body ">
+  <div>
+  <div class="text-center" style="border: 5px solid grey;">  <img  height="250px" width="100%" src="https://www.bing.com/th/id/OGC.f5f2fc5ba52603c5ea602b8202ad529a?pid=1.7&rurl=https%3a%2f%2fcliply.co%2fwp-content%2fuploads%2f2020%2f10%2f402010120_RAINING_COINS_400px.gif&ehk=38pmjswbYSb3rOO8WTDMHjh6BLOZfBG9jH9wDhNk1pI%3d" alt=""></div> 
+    <h4 class="mt-5">Hi {{user}}..,</h4>
+    <p>Your Current Balance is <span style="color: rgb(30, 153, 6); font-size: 25px;">₹ {{balance}}</span> </p>
+  </div>
+</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h1 class="modal-title fs-5" id="staticBackdropLabel">Fund Transfer</h1>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+  <form  [formGroup]="fundTransferForm ">
+    <div class="modal-body">
+      <div class="form-floating mb-3">
+        <div *ngIf="this.fundTransferForm.get('creditAcn')?.errors&&this.fundTransferForm.get('creditAcn')?.touched" style="color: red;font-size: 12px;">* invalid account number. . . !</div>
+        <input name="creditAcn" formControlName="creditAcn" type="text" class="form-control" id="floatingInput" placeholder="Enter Recipient Account Number">
+        <label for="floatingInput">To Account Number</label>
+      </div>
+      <div class="form-floating mb-3">
+        <div *ngIf="this.fundTransferForm.get('amount')?.errors&&this.fundTransferForm.get('amount')?.touched" style="color: red;font-size: 12px;">* invalid amount. . . !</div>
+        <input name="amount" formControlName="amount"  type="text" class="form-control" id="floatingInput1" placeholder="enter amount">
+        <label for="floatingInput1">Amount</label>
+      </div>
+      <div class="form-floating">
+        <div *ngIf="this.fundTransferForm.get('password')?.errors&&this.fundTransferForm.get('password')?.touched" style="color: red;font-size: 12px;">* invalid account number. . . !</div>
+        <input name="password" formControlName="password"  type="password" class="form-control" id="floatingPassword" placeholder="Password">
+        <label for="floatingPassword">Password</label>
+      </div>
+      <!------to show result if transaction wea successfull-->
+      <div class="text-success fw-bolder text-center my-2 ">
+        {{transferSucess}}
+      </div>
+      <div class="text-danger fw-bolder text-center my-2 ">
+        {{transferError}}
+      </div>
+
+
+      <div class="text-center my-3 d-flex justify-content-evenly">
+       <button type="submit" (click)="fundTransfer()" class="btn btn-outline-primary ">Initiate Transaction</button>
+       <button (click)="reset()" class="btn btn-outline-warning">Reset</button>
+       <button data-bs-dismiss="modal" class="btn btn-outline-danger">Close</button>
+      </div>
+    </div>
+  </form>
+  </div>
+</div>
+</div>
+
+
+
+  <!-----main content-->
+  <div style="min-height: 70vh;" class="container">
+    <div class="row">
+        <div class="col-7">
+            <!----image-->
+          <img width="100%" height="400px" src="https://i.pinimg.com/originals/89/67/92/8967925b9d9141e88ced0a9020bdbc5e.gif" alt="">
+        </div>
+
+        <div class="col-5 p-5">
+            <!----heading and texts-->
+            <h1>Welcome {{user}}</h1>
+            <p style="text-align: justify;">Online banking allows you to conduct financial transactions via the Internet. Online banking is also known as Internet banking or web banking.</p>
+            <div class="collapse" id="collapseExample">
+                
+            <p style="text-align: justify;">Online banking offers customers almost every service traditionally available through a local branch including deposits, transfers, and online bill payments. Virtually every banking institution has some form of online banking you can access through a computer or app.</p>
+             </div>
+            <button (click)="collapse()"  data-bs-toggle="collapse" data-bs-target="#collapseExample"  class="btn btn-info mt-3">
+              Read
+                 <span *ngIf="!isCollapse">More</span> 
+                 <span *ngIf="isCollapse">Less</span></button>
+        </div>
+    </div>
+  </div>
+
+
+    <!-----footer-->
+<footer class="bg-info text-center text-white">
+  <!-- Grid container -->
+  <div class="container p-4 pb-0">
+    <!-- Section: Social media -->
+    <section class="mb-4">
+      <!-- Facebook -->
+      <a
+        class="btn text-white btn-floating m-1"
+        style="background-color: #3b5998;"
+        href="#!"
+        role="button"
+        ><i class="fab fa-facebook-f"></i
+      ></a>
+
+      <!-- Twitter -->
+      <a
+        class="btn text-white btn-floating m-1"
+        style="background-color: #55acee;"
+        href="#!"
+        role="button"
+        ><i class="fab fa-twitter"></i
+      ></a>
+
+      <!-- Google -->
+      <a
+        class="btn text-white btn-floating m-1"
+        style="background-color: #dd4b39;"
+        href="#!"
+        role="button"
+        ><i class="fab fa-google"></i
+      ></a>
+
+      <!-- Instagram -->
+      <a
+        class="btn text-white btn-floating m-1"
+        style="background-color: #ac2bac;"
+        href="#!"
+        role="button"
+        ><i class="fab fa-instagram"></i
+      ></a>
+
+      <!-- Linkedin -->
+      <a
+        class="btn text-white btn-floating m-1"
+        style="background-color: #0082ca;"
+        href="#!"
+        role="button"
+        ><i class="fab fa-linkedin-in"></i
+      ></a>
+      <!-- Github -->
+      <a
+        class="btn text-white btn-floating m-1"
+        style="background-color: #333333;"
+        href="#!"
+        role="button"
+        ><i class="fab fa-github"></i
+      ></a>
+    </section>
+    <!-- Section: Social media -->
+  </div>
+  <!-- Grid container -->
+
+  <!-- Copyright -->
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    © 2023 Copyright:
+    <a class="text-white" href="https://mdbootstrap.com/">@ICICYBank.com</a>
+  </div>
+  <!-- Copyright -->
+</footer>
+</div>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
